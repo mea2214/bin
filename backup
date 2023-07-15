@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Usage: backup filename
+#
+# backs up filename to a file called
+# filename.backup-timestamp
+
+timestamp=$( date +%s ) ;
+mydate=$(date +%m%d%H%Y) ;
+
+if [ -z $1 ] ; then echo "Usage: backup filename" ; exit ; fi
+
+if [ ! -e $1 ] ; then echo "no filename $1" ; exit ; fi
+filename=$1 ;
+backname="${filename}.backup-$mydate" ;
+if [ -e $backname ] ; then 
+	echo "$backname exists ... remove with this:" ;
+	echo "rm -i $backname" ;
+	exit ;
+fi
+
+cp -p $filename $backname ;
+
