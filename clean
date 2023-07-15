@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Usage: ./clean.sh filename
+
+# cleans text in file names of unsearchable characters
+
+if [ -z $1 ] ; then echo "Usage: ./clean.sh filename" ; exit ; fi
+fname=$1 ;
+
+perl -C -MText::Unidecode -n -i -e'print unidecode( $_)' $fname ;
+
+exit ;
+

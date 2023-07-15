@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Usage: chkconfig <service> <on/off/list/status>
+
+if [ -z $1 ] ; then echo "Usage: chkconfig <service> <on/off/list/status>" ; exit ; fi
+if [ $1 == "list" ] ; then 
+	systemctl list-unit-files --type=service ; exit ;
+elif [ -z $2 ] ; then echo "no second argument with $1" ; exit ; 
+elif [ $2 == "on" ] ; then systemctl enable $1 ;
+elif [ $2 == "off" ] ; then systemctl disable $1 ;
+elif [ $2 == "status" ] ; then systemctl status  $1 ;
+elif [ $2 == "start" ] ; then systemctl start   $1 ;
+elif [ $2 == "stop" ] ; then systemctl stop    $1 ;
+elif [ $2 == "restart" ] ; then systemctl restart $1 ;
+fi
+
+exit ;
+
