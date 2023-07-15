@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# Usage: backupdir dirname
+#
+# this script will tar/gunzip a directory
+# timestamp it and send it to tarballs
+# for archival
+
+MYHOME=$HOME ;
+TARBALLS="$MYHOME/tarballs" ;
+if [ ! -d $TARBALLS ] ; then echo "can't find tarballs at $TARBALLS" ; exit ; fi
+
+timestamp=$( date +%s ) ;
+mydate=$(date +%m%d%H%Y) ;
+
+if [ -z $1 ] ; then echo "Usage: backupdir dirname" ; exit ; fi
+
+
+if [ ! -d $1 ] ; then echo "no directory $1" ; exit ; fi
+backdirname=$( echo $1 | sed -e "s/\//-/g" )  ;
+dirname=$1 ;
+backname="$TARBALLS/${backdirname}.$mydate.tar.gz" ;
+if [ -e $backname ] ; then 
+	echo "$backname exists ... remove with this:" ;
+	echo "rm -i $backname" ;
+	exit ;
+fi
+
+#cp -p $filename $backname ;
+echo "tar -zcf $backname $dirname"  ;
+tar -zcf $backname $dirname  ;
+
+exit ;
+
+
+
